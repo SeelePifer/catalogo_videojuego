@@ -37,6 +37,13 @@ public class Usuarios {
             inverseJoinColumns = @JoinColumn(name = "idVideojuego", referencedColumnName = "idVideojuego"))
     private List<Videojuego> videojuegos;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "usuario_rol",
+            joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "idUsuario"),
+            inverseJoinColumns = @JoinColumn(name = "id_rol", referencedColumnName = "idRol"))
+    private List<Rol> roles;
+
     public long getIdUsuario() {
         return idUsuario;
     }
@@ -67,5 +74,21 @@ public class Usuarios {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public List<Videojuego> getVideojuegos() {
+        return videojuegos;
+    }
+
+    public void setVideojuegos(List<Videojuego> videojuegos) {
+        this.videojuegos = videojuegos;
+    }
+
+    public List<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Rol> roles) {
+        this.roles = roles;
     }
 }

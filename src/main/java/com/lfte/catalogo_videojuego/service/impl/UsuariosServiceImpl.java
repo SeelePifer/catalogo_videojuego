@@ -6,8 +6,14 @@ import com.lfte.catalogo_videojuego.model.Usuarios;
 import com.lfte.catalogo_videojuego.repository.UsuarioRepository;
 import com.lfte.catalogo_videojuego.service.UsuariosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,5 +54,18 @@ public class UsuariosServiceImpl implements UsuariosService {
         }
         usuariosRepository.deleteById(id);
         return true;
+    }
+
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuarios usuario = usuariosRepository.findOneByNombre(username);
+        if(usuario == null) {
+            throw new UsernameNotFoundException(String.format("Usuario no existe", username));
+        }
+        List<GrantedAuthority> roles = new ArrayList<>();
+        usuario.getRoles().forEach(rol -> {
+            roles.add(new SimpleGrantedAuthority(rol.getNombre()));
+        });
+        UserDetails ud = new User(usuario.getNom_User(), usuario.getContraseña(), roles);
+        return ud;
     }
 }
