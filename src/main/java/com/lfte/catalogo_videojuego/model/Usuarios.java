@@ -19,7 +19,7 @@ public class Usuarios {
     @ApiModelProperty(notes = "Nombre debe tener como minimo 5 caracteres")
     @Column(name = "nombres", length = 70)
     @Size(min = 5, max = 70, message = "El nombre debe tener un valor mayor a 5 digitos y menor a 70")
-    private String nom_User;
+    private String nombre;
 
     @ApiModelProperty(notes = "Contraseña tiene como mínimo 8 caracteres")
     @Column(name = "contraseña", length = 64)
@@ -30,11 +30,11 @@ public class Usuarios {
     @Email(message = "Debe ser un email valido")
     private String correo;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "consulta",
-            joinColumns = @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario"),
-            inverseJoinColumns = @JoinColumn(name = "idVideojuego", referencedColumnName = "idVideojuego"))
+            joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "idUsuario"),
+            inverseJoinColumns = @JoinColumn(name = "id_Videojuego", referencedColumnName = "idVideojuego"))
     private List<Videojuego> videojuegos;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -53,11 +53,11 @@ public class Usuarios {
     }
 
     public String getNom_User() {
-        return nom_User;
+        return nombre;
     }
 
-    public void setNom_User(String nom_User) {
-        this.nom_User = nom_User;
+    public void setNom_User(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getContraseña() {

@@ -53,7 +53,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/tokens/**").permitAll()
                 .antMatchers("/consultaexamenes/**").permitAll()
                 .antMatchers("/pacientes/**").permitAll()
-                .antMatchers("/usuarios/").permitAll()
+                .antMatchers("/usuarios/**").permitAll()
                 .antMatchers("/usuarios/getAll/**").hasRole("USER");
     }
 }

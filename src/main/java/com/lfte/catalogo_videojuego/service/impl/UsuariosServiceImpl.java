@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuariosServiceImpl implements UsuariosService {
+public class UsuariosServiceImpl implements UsuariosService, UserDetailsService {
     @Autowired
     private UsuarioRepository usuariosRepository;
 
@@ -56,6 +57,7 @@ public class UsuariosServiceImpl implements UsuariosService {
         return true;
     }
 
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuarios usuario = usuariosRepository.findOneByNombre(username);
         if(usuario == null) {
